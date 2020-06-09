@@ -2,63 +2,64 @@ let vacationsDao = require("../dao/vacations-dao");
 const validation = require("../validation/validation");
 
 
-async function addProduct(product) {
+async function addTour(tour) {
 
-    delete product.productId;
+    // await validation.addTourValidation(tour);
 
-    await validation.addProductValidation(product);
-
-    await productsDao.addProduct(product);
+    await vacationsDao.addTour(tour);
 }
 
 // Only by admin
-async function updateProduct(product) {
+async function updateTour(tour) {
 
-    let oldProductDetails = await productsDao.getProductById(product.productId);
+    let oldTourDetails = await vacationsDao.getTourById(tour.tourId);
 
-    if(product.category == '') {
-        console.log('first condition is true');
-        product.category = oldProductDetails[0].category_id;
+    // need to make sure evry all options are coverd
+    if(tour.start_date == '') {
+        tour.start_date = oldTourDetails[0].start_date;
     }
-    if(product.productImage == '') {
-        product.productImage = oldProductDetails[0].image_path;
+    if(tour.end_date == '') {
+        tour.end_date = oldTourDetails[0].end_date;
+    }
+    if(tour.image_path == '') {
+        tour.image_path = oldTourDetails[0].image_path;
     }
 
-    await validation.updateProductValidation(product);
+    await validation.updateTourValidation(tour);
 
-    await productsDao.updateProduct(product);
+    await vacationsDao.updateTour(tour);
 }
 
-async function getAllProducts() {
+async function getAllTours() {
     // Validations
-    let products = await productsDao.getAllProducts();
-    return products;
+    let tours = await vacationsDao.getAllTours();
+    return tours;
 }
 
-async function getAllProductsByCategoryId(categoryId) {
-    let products = await productsDao.getAllProductsByCategoryId(categoryId);
-    // console.log(products);
-    return products;
-}
+// async function getAllProductsByCategoryId(categoryId) {
+//     let products = await vacationsDao.getAllProductsByCategoryId(categoryId);
+//     // console.log(products);
+//     return products;
+// }
 
-async function getProductByName(productName) {
+// async function getProductByName(productName) {
 
-    let obj = {
-        productName: productName
-    }
+//     let obj = {
+//         productName: productName
+//     }
 
-    await validation.getProductByNameValidation(obj);
+//     await validation.getProductByNameValidation(obj);
     
-    let product = await productsDao.getProductByName(productName);
-    // console.log(product);
-    return product;
-}
+//     let product = await vacationsDao.getProductByName(productName);
+//     // console.log(product);
+//     return product;
+// }
 
-async function getNumberOfProducts() {
-    // Validations
-    let numberOfProducts = await productsDao.getNumberOfProducts();
-    return numberOfProducts
-}
+// async function getNumberOfProducts() {
+//     // Validations
+//     let numberOfProducts = await vacationsDao.getNumberOfProducts();
+//     return numberOfProducts
+// }
 
 // async function deleteProduct(id) {
 //     await usersDao.deleteProduct(id);
@@ -66,5 +67,8 @@ async function getNumberOfProducts() {
 
 
 module.exports = {
+    addTour,
+    updateTour,
+    getAllTours
 };
 
