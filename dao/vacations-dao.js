@@ -15,6 +15,7 @@ async function updateTour(tour) {
 }
 
 async function getAllTours() {
+    // let sql = "SELECT id, destination, description, image_path, start_date, end_date, price, followers FROM tours";
     let sql = "SELECT * FROM tours";
     let tours = await connection.execute(sql);
     return tours;

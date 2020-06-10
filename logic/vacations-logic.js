@@ -33,6 +33,12 @@ async function updateTour(tour) {
 async function getAllTours() {
     // Validations
     let tours = await vacationsDao.getAllTours();
+    // let asdf = tours[0].end_date.toString();
+    // tours[0].end_date = asdf;
+
+    // console.log(asdf.substring(1, 10));
+    // console.log(tours);
+
     return tours;
 }
 

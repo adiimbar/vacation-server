@@ -19,7 +19,9 @@ const port = process.env.PORT || 3001;
 const errorHandler = require('./middleware/error-handler');
 // const loginFilter = require('./middleware/login-filter');
 
-const usersController = require("./controllers/users-controller");
+const usersController = require('./controllers/users-controller');
+const vacationsController = require('./controllers/vacations-controller');
+const filesController = require('./controllers/files-controller');
 
 
 // if (!fs.existsSync("./uploads")) { // create "/uploads" folder if not exist.
@@ -39,7 +41,10 @@ server.use(express.json());
 // server.use(loginFilter());
 server.use(errorHandler);
 
-server.use("/users", usersController);
+server.use('/users', usersController);
+server.use('/tours', vacationsController);
+server.use('/uploads', filesController);
+
 // server.use("/files", imagesController);
 
 
