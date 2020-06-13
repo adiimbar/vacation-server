@@ -18,9 +18,9 @@ router.get("/:name", (request, response)=>{
     let fileName = request.params.name;
 
     let imgPath = path.join(__dirname, '../uploads/'+fileName);
-    console.log(imgPath);
-    console.log(fileName);
-    console.log(__dirname);
+    // console.log(imgPath);
+    // console.log(fileName);
+    // console.log(__dirname);
 
     let fullQualifiedFileName = imgPath;
     // let fullQualifiedFileName = __dirname + "../uploads/"+fileName;

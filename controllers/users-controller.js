@@ -31,11 +31,10 @@ router.post("/login", async (request, response) => {
 router.post("/register", async (request, response) => {
 
     let user = request.body;
-    // console.log('in the controller - add user: ' + user);
-
+   
     try {
         await usersLogic.addUser(user);
-        response.status(200).json({ date: "user added"});
+        response.status(200).json({ data: "user added"});
 
     } catch (error) {
         console.log(error);
