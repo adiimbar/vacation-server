@@ -10,7 +10,13 @@ async function addTour(tour) {
 // Only by admin
 async function updateTour(tour) {
     let sql = "UPDATE tours SET destination = ?, description = ?, image_path = ?, start_date = ?, end_date = ?, price = ? WHERE id = ? ";
-    let parameters = [tour.destination, tour.description, tour.image_path, tour.start_date, tour.end_date, tour.price];
+    let parameters = [tour.destination, tour.description, tour.image_path, tour.start_date, tour.end_date, tour.price, tour.id];
+    await connection.executeWithParameters(sql, parameters);
+}
+
+async function updateTourFollowers(tour) {
+    let sql = "UPDATE tours SET followers = ? WHERE id = ? ";
+    let parameters = [tour.followers, tour.id];
     await connection.executeWithParameters(sql, parameters);
 }
 
@@ -63,5 +69,6 @@ module.exports = {
     addTour,
     updateTour,
     getAllTours,
-    getTourById
+    getTourById,
+    updateTourFollowers
 };

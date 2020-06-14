@@ -2,6 +2,7 @@
 // let ServerError = require("../errors/server-error");
 
 const userSchemas = require('../models/userSchema');
+const followersSchema = require('../models/followersSchema');
 const middleware = require('../middleware/Joi-middlewere');
 
 
@@ -21,6 +22,27 @@ async function userRegistrationValidation(user) {
         throw new Error("Invalid details - failed validation");
     }
 }
+
+// followers validations:
+async function followObjValidation(followObj) {
+    const errorDetails =  middleware(followersSchema.follow, followObj);
+    if (errorDetails) {
+        console.log(errorDetails);
+        throw new Error("Invalid details - failed validation");
+    }
+}
+
+async function followUserIdValidation(userId) {
+    const errorDetails =  middleware(followersSchema.userIdCheck, userId);
+    if (errorDetails) {
+        console.log(errorDetails);
+        throw new Error("Invalid details - failed validation");
+    }
+}
+
+// vacation validations:
+
+
 
 // // Products validations
 // async function addProductValidation(product) {
@@ -85,5 +107,7 @@ async function userRegistrationValidation(user) {
 
 module.exports = {
     userLoginValidation,
-    userRegistrationValidation
+    userRegistrationValidation,
+    followObjValidation,
+    followUserIdValidation
 };

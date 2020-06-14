@@ -1,5 +1,11 @@
 const express = require("express");
+const http = require("http"); // More basic server than express.
+const socketIO = require("socket.io");
+
 const server = express();
+const httpServer = http.createServer(server); // Need express
+const socketServer = socketIO.listen(httpServer); // Need the http
+
 // const fs = require("fs");
 const cors = require("cors");
 
@@ -22,6 +28,7 @@ const errorHandler = require('./middleware/error-handler');
 const usersController = require('./controllers/users-controller');
 const vacationsController = require('./controllers/vacations-controller');
 const filesController = require('./controllers/files-controller');
+const followersController = require('./controllers/followers-controller');
 
 
 // if (!fs.existsSync("./uploads")) { // create "/uploads" folder if not exist.
@@ -44,6 +51,7 @@ server.use(errorHandler);
 server.use('/users', usersController);
 server.use('/tours', vacationsController);
 server.use('/uploads', filesController);
+server.use('/follow', followersController);
 
 // server.use("/files", imagesController);
 

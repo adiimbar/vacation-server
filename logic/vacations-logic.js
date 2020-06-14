@@ -42,34 +42,7 @@ async function getAllTours() {
     return tours;
 }
 
-// async function getAllProductsByCategoryId(categoryId) {
-//     let products = await vacationsDao.getAllProductsByCategoryId(categoryId);
-//     // console.log(products);
-//     return products;
-// }
 
-// async function getProductByName(productName) {
-
-//     let obj = {
-//         productName: productName
-//     }
-
-//     await validation.getProductByNameValidation(obj);
-    
-//     let product = await vacationsDao.getProductByName(productName);
-//     // console.log(product);
-//     return product;
-// }
-
-// async function getNumberOfProducts() {
-//     // Validations
-//     let numberOfProducts = await vacationsDao.getNumberOfProducts();
-//     return numberOfProducts
-// }
-
-// async function deleteProduct(id) {
-//     await usersDao.deleteProduct(id);
-// }
 
 
 module.exports = {
