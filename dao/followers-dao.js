@@ -22,7 +22,7 @@ async function getSpecificTourFollow(followObj) {
 }
 
 async function getUserToursFollowing(followObj) {
-    let sql = "SELECT tour_id FROM followers WHERE user_id = ?";
+    let sql = "SELECT tour_id FROM followers WHERE user_id = ? GROUP BY tour_id";
     let parameters = [followObj.userId];
     let userToursFollowing = await connection.executeWithParameters(sql, parameters);
     // console.log(userToursFollowing);
@@ -30,7 +30,10 @@ async function getUserToursFollowing(followObj) {
 }
 
 async function getNumberOfFollowersForAllTours() {
-    let sql = "SELECT COUNT(user_id) AS numOfFollowers, tour_id FROM followers GROUP BY tour_id";
+    let sql = "SELECT COUNT(f.user_id) AS numOfFollowers, f.tour_id, t.destination " +
+                "FROM followers f LEFT JOIN tours t " +
+                "ON f.tour_id = t.id " +
+                "GROUP BY f.tour_id";
     let userToursFollowing = await connection.execute(sql);
     // console.log(userToursFollowing);
     return userToursFollowing;

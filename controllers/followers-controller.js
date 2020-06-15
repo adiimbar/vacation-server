@@ -2,7 +2,7 @@ let followersLogic = require("../logic/followers-logic");
 const express = require("express");
 const router = express.Router();
 
-
+// add follower
 router.post("/addFollower", async (request, response) => {
 
     let authorizationString = request.headers["authorization"];
@@ -18,6 +18,7 @@ router.post("/addFollower", async (request, response) => {
     }
 });
 
+// remove follower
 router.delete("/:tourId", async (request, response) => {
 
     let tourId = request.params.tourId;
