@@ -67,7 +67,7 @@ async function login(user) {
     usersCache.set(token, userData);
 
 
-    return {token:token, userType:userType};
+    return {token:token, userType:userType, userId: userId};
 }
 
 // get user details from server cache

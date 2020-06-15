@@ -3,7 +3,8 @@ const http = require("http"); // More basic server than express.
 
 const server = express();
 const httpServer = http.createServer(server); // Need express
-
+const SocketGateway = require('./socket.gateway').SocketGateway;
+const socketGateway = new SocketGateway();
 
 // const fs = require("fs");
 const cors = require("cors");
@@ -101,4 +102,6 @@ server.use('/follow', followersController);
 // });
 
 
-server.listen(port, () => console.log("Listening on http://localhost: " + port));
+const app = server.listen(port, () => console.log("Listening on http://localhost: " + port));
+
+socketGateway.initGateway(app);
