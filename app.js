@@ -1,13 +1,16 @@
 const express = require("express");
 const http = require("http"); // More basic server than express.
-const socketIO = require("socket.io");
 
 const server = express();
 const httpServer = http.createServer(server); // Need express
-const socketServer = socketIO.listen(httpServer); // Need the http
+
 
 // const fs = require("fs");
 const cors = require("cors");
+
+// expressServer.use(express.static(__dirname)); // Serve index.html
+
+const userIdToSocketsMap = new Map();
 
 
 const port = process.env.PORT || 3001;
