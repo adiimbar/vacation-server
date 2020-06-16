@@ -42,12 +42,26 @@ async function getAllTours() {
     return tours;
 }
 
+async function incrementFollowersByOne(tour) {
 
+    // await validation.addTourValidation(tour);
+
+    await vacationsDao.incrementFollowersByOne(tour);
+}
+
+async function decrementFollowersByOne(tour) {
+
+    // await validation.addTourValidation(tour);
+
+    await vacationsDao.decrementFollowersByOne(tour);
+}
 
 
 module.exports = {
     addTour,
     updateTour,
-    getAllTours
+    getAllTours,
+    incrementFollowersByOne,
+    decrementFollowersByOne
 };
 

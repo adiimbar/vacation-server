@@ -1,5 +1,6 @@
 let followersDao = require("../dao/followers-dao");
 let usersLogic = require("./users-logic");
+let vacationsLogic = require("../logic/vacations-logic");
 const validation = require("../validation/validation");
 
 
@@ -13,8 +14,13 @@ async function addFollower(requestObj, authorizationString) {
     }
 
     await validation.followObjValidation(followObj);
-    
-    await followersDao.addFollower(followObj);
+
+    // learned a new trick
+    await Promise.all([
+        followersDao.addFollower(followObj),
+        vacationsLogic.incrementFollowersByOne(followObj)
+    ])
+
 }
 
 async function deleteSpecificTourFollow(tourId, authorizationString) {
@@ -28,7 +34,10 @@ async function deleteSpecificTourFollow(tourId, authorizationString) {
 
     await validation.followObjValidation(followObj);
 
-    await followersDao.deleteSpecificTourFollow(followObj);
+    await Promise.all([
+        followersDao.deleteSpecificTourFollow(followObj),
+        vacationsLogic.decrementFollowersByOne(followObj)
+    ])
 }
 
 async function getSpecificTourFollow(tourId, authorizationString) {

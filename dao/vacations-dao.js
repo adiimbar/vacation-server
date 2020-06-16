@@ -14,6 +14,22 @@ async function updateTour(tour) {
     await connection.executeWithParameters(sql, parameters);
 }
 
+// increment and decrement will be quite demanding, 
+// if there where a lot of users and the amount of follow requests would be high,
+// the thought is to make an update every once in a while and push the amount of follow requests that have accumulated.
+// right now it's done thes way for accuracy
+async function incrementFollowersByOne(tourObj) {
+    let sql = "UPDATE tours SET followers = followers + 1 WHERE id = ? ";
+    let parameters = [tourObj.tourId];
+    await connection.executeWithParameters(sql, parameters);
+}
+
+async function decrementFollowersByOne(tourObj) {
+    let sql = "UPDATE tours SET followers = followers - 1 WHERE id = ? ";
+    let parameters = [tourObj.tourId];
+    await connection.executeWithParameters(sql, parameters);
+}
+
 async function updateTourFollowers(tour) {
     let sql = "UPDATE tours SET followers = ? WHERE id = ? ";
     let parameters = [tour.followers, tour.id];
@@ -21,7 +37,6 @@ async function updateTourFollowers(tour) {
 }
 
 async function getAllTours() {
-    // let sql = "SELECT id, destination, description, image_path, start_date, end_date, price, followers FROM tours";
     let sql = "SELECT * FROM tours";
     let tours = await connection.execute(sql);
     return tours;
@@ -67,6 +82,8 @@ async function getTourById(tourId) {
 
 module.exports = {
     addTour,
+    incrementFollowersByOne,
+    decrementFollowersByOne,
     updateTour,
     getAllTours,
     getTourById,

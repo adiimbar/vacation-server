@@ -2,8 +2,8 @@ const mysql = require("mysql2");
 
 // Connection = קו תקשורת למסד הנתונים
 const connection = mysql.createConnection({
-    host: "10.0.0.18", // Computer
-    user: "root2", // Username
+    host: "localhost", // Computer
+    user: "root", // Username
     password: "1234", // Password
     database: "vacations" // Database name
 });
