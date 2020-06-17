@@ -21,6 +21,7 @@ async function addFollower(requestObj, authorizationString) {
         vacationsLogic.incrementFollowersByOne(followObj)
     ])
 
+    return followObj
 }
 
 async function deleteSpecificTourFollow(tourId, authorizationString) {
@@ -38,6 +39,8 @@ async function deleteSpecificTourFollow(tourId, authorizationString) {
         followersDao.deleteSpecificTourFollow(followObj),
         vacationsLogic.decrementFollowersByOne(followObj)
     ])
+
+    return followObj
 }
 
 async function getSpecificTourFollow(tourId, authorizationString) {
