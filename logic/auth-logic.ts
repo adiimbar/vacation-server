@@ -1,20 +1,17 @@
-let usersDao = require("../dao/users-dao");
 const jwt = require('jsonwebtoken');
+const crypto = require("crypto");
+
 const config = require('../config.json');
 let ServerError = require("./../errors/server-error");
 let ErrorType = require("../errors/error-type");
-
-const crypto = require("crypto");
-const saltRight = "sdkjfhdskajh";
-const saltLeft = "--mnlcfs;@!$ ";
-
-const usersCache = new Map();
-
 const validation = require("../validation/validation");
+let usersDao = require("../dao/users-dao");
+
+const SALT_RIGHT = "sdkjfhdskajh";
+const SALT_LEFT = "--mnlcfs;@!$ ";
 
 
-
-async function addUser(user) {
+export async function addUser(user) {
     // validation
     await validation.userRegistrationValidation(user);
 
@@ -23,17 +20,17 @@ async function addUser(user) {
     // }
 
     // hash password
-    user.password = crypto.createHash("md5").update(saltLeft + user.password + saltRight).digest("hex");
+    user.password = crypto.createHash("md5").update(SALT_LEFT + user.password + SALT_RIGHT).digest("hex");
 
     await usersDao.addUser(user);
 }
 
-async function login(user) {
+export async function login(user) {
     // validation
     await validation.userLoginValidation(user);
 
     // hash password
-    user.password = crypto.createHash("md5").update(saltLeft + user.password + saltRight).digest("hex");
+    user.password = crypto.createHash("md5").update(SALT_LEFT + user.password + SALT_RIGHT).digest("hex");
 
     let usersLoginResult = await usersDao.login(user);
 
@@ -46,7 +43,7 @@ async function login(user) {
     let firstName = usersLoginResult[0].first_name;
     let lastName = usersLoginResult[0].last_name;
     let userName = usersLoginResult[0].user_name;
-    
+
     // //  Creates a cart for the user if he dose not have one
     // if (cartId === null) {
     //     await cartsLogic.addCart(userId);
@@ -62,59 +59,11 @@ async function login(user) {
         userName: userName
     };
 
-    const token = jwt.sign({ sub: userName }, config.secret);
+    const token = jwt.sign({
+        sub: userName,
+        ...userData
+    }, config.secret);
     // save to cache
-    usersCache.set(token, userData);
-
 
     return {token:token, userType:userType, userId: userId};
 }
-
-// get user details from server cache
-async function getMe(authorizationString) {
-
-    // Removing the bearer prefix, leaving the clean token
-    let token = authorizationString.substring("Bearer ".length);
-    let userData = usersCache.get(token);
-
-    // console.log("***********" + usersCache);
-
-    return userData;
-}
-
-
-// async function getUser(id) {
-
-//     // let authorizationString = request.headers["authorization"];
-
-//     // // Removing the bearer prefix, leaving the clean token
-//     // let token = authorizationString.substring("Bearer ".length);
-//     // let userData = usersCache.get(token);
-
-//     let user = await usersDao.getUser(id);
-//     // console.log(user);
-//     return user;
-// }
-
-
-
-
-
-
-module.exports = {
-    addUser,
-    // getUser,
-    login,
-    getMe
-};
-
-let user = {
-    firstName: 'Saruman',
-    lastName: 'the white',
-    userName: 'asdf',
-    password: '1234'
-}
-
-// addUser(user);
-
-// login(user);

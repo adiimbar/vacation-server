@@ -1,4 +1,5 @@
-let usersLogic = require("../logic/users-logic");
+const usersLogic = require("../logic/users-logic");
+const authLogic = require("../logic/auth-logic");
 const express = require("express");
 const router = express.Router();
 // const jwt = require('jsonwebtoken');
@@ -12,7 +13,7 @@ router.post("/login", async (request, response) => {
     // console.log(user);
 
     try {
-        let successfullLoginData = await usersLogic.login(user);
+        let successfullLoginData = await authLogic.login(user);
         response.json(successfullLoginData);
 
         // let email = successfullLoginData[0].email;
@@ -33,7 +34,7 @@ router.post("/register", async (request, response) => {
     let user = request.body;
    
     try {
-        await usersLogic.addUser(user);
+        await authLogic.addUser(user);
         response.status(200).json({ data: "user added"});
 
     } catch (error) {
