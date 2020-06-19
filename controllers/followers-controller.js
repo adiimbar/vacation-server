@@ -36,6 +36,7 @@ router.delete("/:tourId", async (request, response) => {
     }
 });
 
+// get number of followers for each tour - data for charts
 router.get("/", async (request, response) => {
 
     try {
@@ -49,6 +50,8 @@ router.get("/", async (request, response) => {
 
 });
 
+// not in use by client
+// get user tours followings
 router.get("/userFollowings", async (request, response) => {
 
     let authorizationString = request.headers['authorization'];
@@ -64,6 +67,8 @@ router.get("/userFollowings", async (request, response) => {
 
 });
 
+// not in use by client
+// get user's Specific tour follow status
 router.get("/:tourId", async (request, response) => {
 
     let tourId = request.params.tourId;

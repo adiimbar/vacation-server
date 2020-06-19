@@ -68,19 +68,4 @@ router.get("/me", async (request, response)=>{
 
 })
 
-// // getUser
-// // router.get("/me", async (request, response) => {
-// router.get("/:id", async (request, response) => {
-//     try {
-//         let user = await usersLogic.getUser(request.params.id);
-//         response.json(user);
-        
-//     } catch (error) {
-//         console.log(error);
-//         response.status(401).send("No user in database");
-//     }
-
-// });
-
-
 module.exports = router;

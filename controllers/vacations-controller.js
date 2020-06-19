@@ -2,7 +2,7 @@ let vacationsLogic = require("../logic/vacations-logic");
 const express = require("express");
 const router = express.Router();
 
-
+// add tour - only by admin
 router.post("/", async (request, response) => {
 
     let tour = request.body;
@@ -17,6 +17,7 @@ router.post("/", async (request, response) => {
     }
 });
 
+// update tour - only by admin
 router.put("/", async (request, response) => {
 
     let tour = request.body;
@@ -31,6 +32,7 @@ router.put("/", async (request, response) => {
     }
 });
 
+// get all tours
 router.get("/", async (request, response) => {
 
     let authorizationString = request.headers["authorization"];
@@ -45,36 +47,5 @@ router.get("/", async (request, response) => {
     }
 
 });
-
-// router.get("/:id", async (request, response) => {
-
-//     let categoryId = request.params.id;
-
-//     try {
-//         let products = await vacationsLogic.getAllProductsByCategoryId(categoryId);
-//             // console.log(products);
-//             response.json(products);
-
-//     } catch (error) {
-//         console.log(error);
-//         response.status(401).send("something went terribly wrong...");
-//     }
-
-// });
-
-// router.get("/getProduct/:name", async (request, response) => {
-
-//     let productName = request.params.name;
-
-//     try {
-//         let product = await vacationsLogic.getProductByName(productName);
-//             response.json(product);
-
-//     } catch (error) {
-//         console.log(error);
-//         response.status(401).send("something went terribly wrong...");
-//     }
-
-// });
 
 module.exports = router;
