@@ -40,14 +40,9 @@ async function getAllTours(userId) {
     let sql = "SELECT t.*, f.tour_id AS isFollowed " +
                 "FROM tours t LEFT JOIN followers f " +
                 "ON f.tour_id = t.id AND f.user_id = ?";
-                // "GROUP BY f.tour_id";
 
-    // "SELECT tour_id FROM followers WHERE user_id = ? GROUP BY tour_id"
     let parameters = [userId];
     let tours = await connection.executeWithParameters(sql, parameters);
-
-    console.log(tours);
-
     return tours;
 }
 

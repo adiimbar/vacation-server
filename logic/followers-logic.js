@@ -15,13 +15,25 @@ async function addFollower(requestObj, authorizationString) {
 
     await validation.followObjValidation(followObj);
 
-    // learned a new trick
-    await Promise.all([
-        followersDao.addFollower(followObj),
-        vacationsLogic.incrementFollowersByOne(followObj)
-    ])
+    let oldFollowDetails = await getSpecificTourFollow(followObj.tourId, authorizationString)
 
-    return followObj
+    if(oldFollowDetails.length) {
+
+        console.log('rejected addind follower');
+        throw console.error('cannot add follower - the user is already following this vacation');
+        
+    } else {
+
+         // learned a new trick
+         await Promise.all([
+            followersDao.addFollower(followObj),
+            vacationsLogic.incrementFollowersByOne(followObj)
+        ])
+        
+        return followObj
+       
+    }
+   
 }
 
 async function deleteSpecificTourFollow(tourId, authorizationString) {
