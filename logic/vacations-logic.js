@@ -1,4 +1,6 @@
-let vacationsDao = require("../dao/vacations-dao");
+const vacationsDao = require("../dao/vacations-dao");
+const usersLogic = require("./users-logic");
+// const followersLogic = require("./followers-logic");
 const validation = require("../validation/validation");
 
 
@@ -30,9 +32,26 @@ async function updateTour(tour) {
     await vacationsDao.updateTour(tour);
 }
 
-async function getAllTours() {
+async function getAllTours(authorizationString) {
     // Validations
-    let tours = await vacationsDao.getAllTours();
+
+    let userData = await usersLogic.getMe(authorizationString);
+    let userId = userData.userId;
+    // console.log(userData);
+
+    let tours = await vacationsDao.getAllTours(userId);
+    // let userFollowing = await followersLogic.getUserToursFollowing(authorizationString)
+
+    // let [
+    //     tours,
+    //     userFollowing
+    // ] = await Promise.all([
+    //     vacationsDao.getAllTours(),
+    //     followersLogic.getUserToursFollowing(authorizationString)    
+    // ])
+
+    // console.log(userFollowing);
+    // console.log(tours);
     // let asdf = tours[0].end_date.toString();
     // tours[0].end_date = asdf;
 
