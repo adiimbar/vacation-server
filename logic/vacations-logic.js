@@ -8,11 +8,14 @@ async function addTour(tour) {
 
     // await validation.addTourValidation(tour);
 
-    await vacationsDao.addTour(tour);
+    let newTour = await vacationsDao.addTour(tour);
+    // need to pass data to the websocket and from there to the users
 }
 
 // Only by admin
 async function updateTour(tour) {
+
+    console.log('inside update tour logic');
 
     let oldTourDetails = await vacationsDao.getTourById(tour.tourId);
 

@@ -21,8 +21,8 @@ const port = process.env.PORT || 3001;
 // const jwt = require('jsonwebtoken');
 
 // const bodyParser = require('body-parser');
-// const uuid = require("uuid");
-// const fileUpload = require("express-fileupload");
+const uuid = require("uuid");
+const fileUpload = require("express-fileupload");
 
 // const usersCache = new Map();
 
@@ -44,7 +44,7 @@ server.use(express.json());
 // server.use(bodyParser.urlencoded({ extended: false }));
 // server.use(bodyParser.json());
 server.use(cors());
-// server.use(fileUpload());
+server.use(fileUpload());
 server.use(express.json());
 // let nextID = 1;
 
