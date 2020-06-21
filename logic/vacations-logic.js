@@ -3,8 +3,10 @@ const usersLogic = require("./users-logic");
 // const followersLogic = require("./followers-logic");
 const validation = require("../validation/validation");
 
-
+// Only by admin
 async function addTour(tour) {
+
+    // need to validate for admin
 
     // await validation.addTourValidation(tour);
 
@@ -15,7 +17,7 @@ async function addTour(tour) {
 // Only by admin
 async function updateTour(tour) {
 
-    console.log('inside update tour logic');
+    // need to validate for admin   
 
     let oldTourDetails = await vacationsDao.getTourById(tour.tourId);
 
@@ -30,9 +32,10 @@ async function updateTour(tour) {
         tour.image_path = oldTourDetails[0].image_path;
     }
 
-    await validation.updateTourValidation(tour);
+    // await validation.updateTourValidation(tour);
 
-    await vacationsDao.updateTour(tour);
+    let updatedTour = await vacationsDao.updateTour(tour);
+    // need to send update via socket
 }
 
 async function getAllTours(authorizationString) {
@@ -43,23 +46,6 @@ async function getAllTours(authorizationString) {
     // console.log(userData);
 
     let tours = await vacationsDao.getAllTours(userId);
-    // let userFollowing = await followersLogic.getUserToursFollowing(authorizationString)
-
-    // let [
-    //     tours,
-    //     userFollowing
-    // ] = await Promise.all([
-    //     vacationsDao.getAllTours(),
-    //     followersLogic.getUserToursFollowing(authorizationString)    
-    // ])
-
-    // console.log(userFollowing);
-    // console.log(tours);
-    // let asdf = tours[0].end_date.toString();
-    // tours[0].end_date = asdf;
-
-    // console.log(asdf.substring(1, 10));
-    // console.log(tours);
 
     return tours;
 }

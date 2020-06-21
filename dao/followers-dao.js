@@ -49,14 +49,3 @@ module.exports = {
     getUserToursFollowing,
     getNumberOfFollowersForAllTours
 };
-
-// followObj = {
-//     userId: 8,
-//     tourId: 2
-// }
-
-// addFollower(followObj);
-// deleteSpecificTourFollow(followObj);
-// getSpecificTourFollow(followObj);
-// getUserToursFollowing(followObj.userId);
-// getNumberOfFollowersForAllTours()

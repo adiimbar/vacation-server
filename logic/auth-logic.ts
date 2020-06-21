@@ -44,13 +44,6 @@ export async function login(user) {
     let lastName = usersLoginResult[0].last_name;
     let userName = usersLoginResult[0].user_name;
 
-    // //  Creates a cart for the user if he dose not have one
-    // if (cartId === null) {
-    //     await cartsLogic.addCart(userId);
-    //     newCartId = await cartsLogic.getCartByUserId(userId);
-    //     cartId = newCartId[0].cart_id;
-    // }
-
     let userData = {
         userId: userId,
         userType: userType,
@@ -59,11 +52,11 @@ export async function login(user) {
         userName: userName
     };
 
+    // set data to token
     const token = jwt.sign({
         sub: userName,
         ...userData
     }, config.secret);
-    // save to cache
 
     return {token:token, userType:userType, userId: userId};
 }

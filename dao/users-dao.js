@@ -18,7 +18,6 @@ async function addUser(user) {
 async function getUser(userId) {
     let sql = "SELECT * FROM users WHERE user_id=?";
     let parameters = [userId];
-    // let user = await connection.executeWithParameters(sql, parameters);
 
     try {
         user = await connection.executeWithParameters(sql, parameters);
@@ -35,12 +34,6 @@ async function getUser(userId) {
 async function login(user) {
 
     let sql = 'SELECT * FROM users WHERE user_name =? AND password =?';
-
-    // let sql = 'SELECT u.id, u.first_name, u.last_name, u.password, u.type, '+
-    //     'FROM users u LEFT JOIN shopping_carts s '+
-    //     'ON u.user_id = s.user_id '+
-    //     'WHERE u.user_name =? AND u.password =?';
-
 
     let parameters = [user.userName, user.password];
     // let usersLoginResult = await connection.executeWithParameters(sql, parameters);
@@ -63,15 +56,3 @@ module.exports = {
     getUser,
     login
 };
-
-
-let user = {
-    firstName: 'Saruman',
-    lastName: 'the white',
-    userName: 'asdf',
-    password: '1234'
-}
-
-// addUser(user);
-
-// login(user);

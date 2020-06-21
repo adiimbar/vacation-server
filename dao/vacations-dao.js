@@ -53,37 +53,6 @@ async function getTourById(tourId) {
     return tour;
 }
 
-// async function getAllProductsByCategoryId(categoryId) {
-//     let sql = "SELECT * FROM products WHERE category_id = ?";
-//     let parameters = [categoryId];
-//     let products = await connection.executeWithParameters(sql, parameters);
-//     return products;
-// }
-
-
-// async function getProductByName(productName) {
-//     let sql = "SELECT * FROM products WHERE product_name = ?";
-//     let parameters = [productName];
-//     let products = await connection.executeWithParameters(sql, parameters);
-//     // console.log(products);
-//     return products;
-// }
-
-// async function getNumberOfProducts() {
-//     let sql = "SELECT COUNT(product_id) AS numOfProducts FROM products";
-//     let orders = await connection.execute(sql);
-//     return orders;
-// }
-  
-
-// // Only by admin
-// async function deleteProduct(id) {
-//     let sql = "DELETE FROM products WHERE product_id=?";
-//     let parameters = [id];
-//     await connection.executeWithParameters(sql, parameters);    
-// }
-
-
 module.exports = {
     addTour,
     incrementFollowersByOne,
