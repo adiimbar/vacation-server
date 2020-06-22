@@ -52,3 +52,8 @@ server.use('/follow', followersController);
 const app = server.listen(port, () => console.log("Listening on http://localhost: " + port));
 
 socketGateway.initGateway(app);
+
+// module.exports = {
+    export const exportSocketGateway = socketGateway
+    // export const exportSocketGateway = socketGateway
+// }

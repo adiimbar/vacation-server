@@ -3,6 +3,9 @@ const usersLogic = require("./users-logic");
 // const followersLogic = require("./followers-logic");
 const validation = require("../validation/validation");
 
+import { exportSocketGateway } from '../app';
+
+
 // Only by admin
 async function addTour(tour) {
 
@@ -12,6 +15,7 @@ async function addTour(tour) {
 
     let newTour = await vacationsDao.addTour(tour);
     // need to pass data to the websocket and from there to the users
+    exportSocketGateway.logger();
 }
 
 // Only by admin

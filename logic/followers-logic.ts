@@ -3,6 +3,8 @@ let usersLogic = require("./users-logic");
 let vacationsLogic = require("../logic/vacations-logic");
 const validation = require("../validation/validation");
 
+import { exportSocketGateway } from '../app';
+
 
 async function addFollower(requestObj, authorizationString) {
 
@@ -29,7 +31,9 @@ async function addFollower(requestObj, authorizationString) {
             followersDao.addFollower(followObj),
             vacationsLogic.incrementFollowersByOne(followObj)
         ])
-        
+
+        exportSocketGateway.logger();
+
         return followObj
        
     }
