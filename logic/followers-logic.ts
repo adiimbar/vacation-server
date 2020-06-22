@@ -3,7 +3,7 @@ let usersLogic = require("./users-logic");
 let vacationsLogic = require("../logic/vacations-logic");
 const validation = require("../validation/validation");
 
-import { exportSocketGateway } from '../app';
+// import { exportSocketGateway } from '../app';
 
 
 async function addFollower(requestObj, authorizationString) {
@@ -32,7 +32,7 @@ async function addFollower(requestObj, authorizationString) {
             vacationsLogic.incrementFollowersByOne(followObj)
         ])
 
-        exportSocketGateway.logger();
+        // exportSocketGateway.logger();
 
         return followObj
        

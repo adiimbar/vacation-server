@@ -38,7 +38,7 @@ router.get("/", async (request, response) => {
     let authorizationString = request.headers["authorization"];
 
     try {
-        let allTours = await vacationsLogic.getAllTours(authorizationString);
+        let allTours = await vacationsLogic.getAllToursForUser(authorizationString);
         response.json(allTours);
 
     } catch (error) {

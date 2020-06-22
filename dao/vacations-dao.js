@@ -4,7 +4,8 @@ let connection = require("./connection-wrapper");
 async function addTour(tour) {
     let sql = 'INSERT INTO tours (destination, description, image_path, start_date, end_date, price) VALUES(?, ?, ?, ?, ?, ?)';
     let parameters = [tour.destination, tour.description, tour.image_path, tour.start_date, tour.end_date, tour.price];
-    await connection.executeWithParameters(sql, parameters);
+    let newTour = await connection.executeWithParameters(sql, parameters);
+    return newTour.insertId
 }
 
 // Only by admin
@@ -12,6 +13,8 @@ async function updateTour(tour) {
     let sql = "UPDATE tours SET destination = ?, description = ?, image_path = ?, start_date = ?, end_date = ?, price = ? WHERE id = ? ";
     let parameters = [tour.destination, tour.description, tour.image_path, tour.start_date, tour.end_date, tour.price, tour.id];
     await connection.executeWithParameters(sql, parameters);
+    let updatedTourId = tour.id;
+    return updatedTourId
 }
 
 // increment and decrement will be quite demanding, 
@@ -36,7 +39,8 @@ async function updateTourFollowers(tour) {
     await connection.executeWithParameters(sql, parameters);
 }
 
-async function getAllTours(userId) {
+// geting user tours and adding it a column with user follow state
+async function getAllToursForUser(userId) {
     let sql = "SELECT t.*, f.tour_id AS isFollowed " +
                 "FROM tours t LEFT JOIN followers f " +
                 "ON f.tour_id = t.id AND f.user_id = ?";
@@ -58,7 +62,7 @@ module.exports = {
     incrementFollowersByOne,
     decrementFollowersByOne,
     updateTour,
-    getAllTours,
+    getAllToursForUser,
     getTourById,
     updateTourFollowers
 };

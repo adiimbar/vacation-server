@@ -13,9 +13,11 @@ async function addTour(tour) {
 
     // await validation.addTourValidation(tour);
 
-    let newTour = await vacationsDao.addTour(tour);
-    // need to pass data to the websocket and from there to the users
-    exportSocketGateway.logger();
+    let newTourId = await vacationsDao.addTour(tour);
+    
+    let newTour = await vacationsDao.getTourById(newTourId);
+
+    exportSocketGateway.publishNewTourToUsers(newTour[0]);
 }
 
 // Only by admin
@@ -38,18 +40,21 @@ async function updateTour(tour) {
 
     // await validation.updateTourValidation(tour);
 
-    let updatedTour = await vacationsDao.updateTour(tour);
-    // need to send update via socket
+    let updatedTourId = await vacationsDao.updateTour(tour);
+
+    let updatedTour = await vacationsDao.getTourById(updatedTourId);
+
+    exportSocketGateway.publishUpdatedTourToUsers(updatedTour[0]);
 }
 
-async function getAllTours(authorizationString) {
+async function getAllToursForUser(authorizationString) {
     // Validations
 
     let userData = await usersLogic.getMe(authorizationString);
     let userId = userData.userId;
     // console.log(userData);
 
-    let tours = await vacationsDao.getAllTours(userId);
+    let tours = await vacationsDao.getAllToursForUser(userId);
 
     return tours;
 }
@@ -72,7 +77,7 @@ async function decrementFollowersByOne(tour) {
 module.exports = {
     addTour,
     updateTour,
-    getAllTours,
+    getAllToursForUser,
     incrementFollowersByOne,
     decrementFollowersByOne
 };
