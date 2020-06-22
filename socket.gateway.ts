@@ -12,9 +12,9 @@ export class SocketGateway {
         this.socketServer = socketIO.listen(server, { transport : ['websocket'] }); // Need the http
         this.socketServer.set('origins', '*:*')
         await this.handleConnection();
-        setTimeout(() => {
-            this.publishUsersTours(['2'])
-        }, 3000)
+        // setTimeout(() => {
+        //     this.publishUsersTours(['2'])
+        // }, 3000)
     }
 
     async handleConnection() {
@@ -39,24 +39,12 @@ export class SocketGateway {
             return this.connectedUsers[key];
         });
 
-        // console.log('tying to log connectedUsers', this.connectedUsers);
-
-        // console.log('sockets:');
-        // console.log(sockets);
-
-        // console.log('sockets', sockets);
         sockets.forEach((socket) => {
-            // console.log('socket in publish tours:');
-            // console.log(socket);
             socket.emit('new-tour-update');
         })
     };
 
-    publishNewTourToUsers(newTour) {
-        // console.log('made it to publishNewTourToUsers');
-        // // console.log('connectedUsers:', this.connectedUsers);
-        // console.log(newTour);
-
+    publishNewTourToUsers(newTour: Object) {
         const sockets: any = Object.values(this.connectedUsers);
 
         sockets.forEach((socket) => {
@@ -67,13 +55,14 @@ export class SocketGateway {
 
     }
 
-    publishUpdatedTourToUsers(updatedTour) {
+    publishUpdatedTourToUsers(updatedTour: Object) {
+
+        console.log('in publishUpdatedTourToUsers')
 
         const sockets: any = Object.values(this.connectedUsers);
 
         sockets.forEach((socket) => {
-            
-            socket.emit('new-tour-update', updatedTour);
+            socket.emit('tour-update', updatedTour);
         })
     }
 }
