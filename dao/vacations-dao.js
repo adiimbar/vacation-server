@@ -57,6 +57,12 @@ async function getTourById(tourId) {
     return tour;
 }
 
+async function deleteTour(tourId) {
+    let sql = "DELETE FROM tours WHERE id = ?";
+    let parameters = [tourId];
+    await connection.executeWithParameters(sql, parameters);    
+}
+
 module.exports = {
     addTour,
     incrementFollowersByOne,
@@ -64,5 +70,6 @@ module.exports = {
     updateTour,
     getAllToursForUser,
     getTourById,
-    updateTourFollowers
+    updateTourFollowers,
+    deleteTour
 };

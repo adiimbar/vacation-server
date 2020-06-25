@@ -13,6 +13,12 @@ async function deleteSpecificTourFollow(followObj) {
     await connection.executeWithParameters(sql, parameters);    
 }
 
+async function deleteTourFromFollowersTable(tourId) {
+    let sql = "DELETE FROM followers WHERE tour_id = ?";
+    let parameters = [tourId];
+    await connection.executeWithParameters(sql, parameters);    
+}
+
 async function getSpecificTourFollow(followObj) {
     let sql = "SELECT * FROM followers WHERE (user_id = ? AND tour_id = ?)";
     let parameters = [followObj.userId, followObj.tourId];
@@ -45,6 +51,7 @@ async function getNumberOfFollowersForAllTours() {
 module.exports = {
     addFollower,
     deleteSpecificTourFollow,
+    deleteTourFromFollowersTable,
     getSpecificTourFollow,
     getUserToursFollowing,
     getNumberOfFollowersForAllTours

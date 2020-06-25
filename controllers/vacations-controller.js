@@ -48,4 +48,22 @@ router.get("/", async (request, response) => {
 
 });
 
+// remove vacation
+router.delete("/:tourId", async (request, response) => {
+
+    let tourId = request.params.tourId;
+    let authorizationString = request.headers['authorization'];
+
+    try {
+        let successfullyRemovedVacation = await vacationsLogic.deleteTour(tourId, authorizationString);
+        response.json(successfullyRemovedVacation);
+        // await followersLogic.deleteSpecificTourFollow(tourId, authorizationString);
+        // response.status(200).json({data: 'follow removed'});
+
+    } catch (error) {
+        console.log(error);
+        response.status(401).json({ error: "something went terribly wrong..." });
+    }
+});
+
 module.exports = router;

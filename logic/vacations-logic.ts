@@ -1,6 +1,7 @@
 const vacationsDao = require("../dao/vacations-dao");
 const usersLogic = require("./users-logic");
 // const followersLogic = require("./followers-logic");
+const followersDao = require("../dao/followers-dao");
 const validation = require("../validation/validation");
 
 import { exportSocketGateway } from '../app';
@@ -27,7 +28,7 @@ async function updateTour(tour) {
 
     let oldTourDetails = await vacationsDao.getTourById(tour.tourId);
 
-    // need to make sure evry all options are coverd
+    // need to make sure all options are coverd
     if(tour.start_date == '') {
         tour.start_date = oldTourDetails[0].start_date;
     }
@@ -42,8 +43,8 @@ async function updateTour(tour) {
 
     let updatedTourId = await vacationsDao.updateTour(tour);
 
+    // get's the updated tour and send it to connected users via socket
     let updatedTour = await vacationsDao.getTourById(updatedTourId);
-
     exportSocketGateway.publishUpdatedTourToUsers(updatedTour[0]);
 }
 
@@ -73,12 +74,41 @@ async function decrementFollowersByOne(tour) {
     await vacationsDao.decrementFollowersByOne(tour);
 }
 
+async function deleteTour(tourId, authorizationString) {
+
+    let userCacheData = await usersLogic.getMe(authorizationString);
+
+    let deleteTourObj = {
+        tourId: tourId,
+        userType: userCacheData.userType
+    }
+
+    await validation.deleteTourValidation(deleteTourObj);
+
+    if(deleteTourObj.userType === 'ADMIN') {
+        await Promise.all([
+            vacationsDao.deleteTour(tourId),
+            followersDao.deleteTourFromFollowersTable(tourId)
+        ])
+
+        return tourId
+
+    } else {
+        throw new Error("Invalid user type - not ADMIN");
+    }
+
+}
+
+
+
+
 
 module.exports = {
     addTour,
     updateTour,
     getAllToursForUser,
     incrementFollowersByOne,
-    decrementFollowersByOne
+    decrementFollowersByOne,
+    deleteTour
 };
 

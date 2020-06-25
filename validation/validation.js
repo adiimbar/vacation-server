@@ -3,6 +3,7 @@
 
 const userSchemas = require('../models/userSchema');
 const followersSchema = require('../models/followersSchema');
+const vacationSchema = require('../models/vacationSchema');
 const middleware = require('../middleware/Joi-middlewere');
 
 
@@ -41,6 +42,14 @@ async function followUserIdValidation(userId) {
 }
 
 // vacation validations:
+async function deleteTourValidation(deleteTourObj) {
+    const errorDetails =  middleware(vacationSchema.delete, deleteTourObj);
+    if (errorDetails) {
+        console.log(errorDetails);
+        throw new Error("Invalid details - failed validation");
+    }
+}
+
 
 
 
@@ -109,5 +118,6 @@ module.exports = {
     userLoginValidation,
     userRegistrationValidation,
     followObjValidation,
-    followUserIdValidation
+    followUserIdValidation,
+    deleteTourValidation
 };
