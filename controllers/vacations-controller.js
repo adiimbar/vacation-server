@@ -6,9 +6,10 @@ const router = express.Router();
 router.post("/", async (request, response) => {
 
     let tour = request.body;
+    let authorizationString = request.headers['authorization'];
 
     try {
-        let successfullyAddedTour = await vacationsLogic.addTour(tour);
+        let successfullyAddedTour = await vacationsLogic.addTour(tour, authorizationString);
         response.json(successfullyAddedTour);
 
     } catch (error) {
@@ -21,9 +22,10 @@ router.post("/", async (request, response) => {
 router.put("/", async (request, response) => {
 
     let tour = request.body;
+    let authorizationString = request.headers['authorization'];
 
     try {
-        await vacationsLogic.updateTour(tour);
+        await vacationsLogic.updateTour(tour, authorizationString);
         response.status(200).json({ date: "secessus! tour updated"});
 
     } catch (error) {

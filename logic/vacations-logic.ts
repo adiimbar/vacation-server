@@ -8,9 +8,15 @@ import { exportSocketGateway } from '../app';
 
 
 // Only by admin
-async function addTour(tour) {
+async function addTour(tour, authorizationString) {
 
-    // need to validate for admin
+    let userCacheData = await usersLogic.getMe(authorizationString);
+
+    // validate for admin
+    // need to move it to validation file and call it from there
+    if(!(userCacheData.userType === 'ADMIN')) {
+        throw new Error("Invalid user type - not ADMIN, userId is: " + userCacheData.userId);
+    }
 
     // await validation.addTourValidation(tour);
 
@@ -22,10 +28,17 @@ async function addTour(tour) {
 }
 
 // Only by admin
-async function updateTour(tour) {
+async function updateTour(tour, authorizationString) {
 
-    // need to validate for admin   
+    let userCacheData = await usersLogic.getMe(authorizationString);
 
+    // validate for admin
+    // need to move it to validation file and call it from there
+    if(!(userCacheData.userType === 'ADMIN')) {
+        throw new Error("Invalid user type - not ADMIN, userId is: " + userCacheData.userId);
+    }
+
+    
     let oldTourDetails = await vacationsDao.getTourById(tour.tourId);
 
     // need to make sure all options are coverd
