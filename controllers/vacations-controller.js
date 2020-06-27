@@ -1,9 +1,10 @@
 let vacationsLogic = require("../logic/vacations-logic");
 const express = require("express");
 const router = express.Router();
+const routeGuard = require('../middleware/route-guard');
 
 // add tour - only by admin
-router.post("/", async (request, response) => {
+router.post("/", routeGuard, async (request, response) => {
 
     let tour = request.body;
     let authorizationString = request.headers['authorization'];
@@ -19,7 +20,7 @@ router.post("/", async (request, response) => {
 });
 
 // update tour - only by admin
-router.put("/", async (request, response) => {
+router.put("/", routeGuard, async (request, response) => {
 
     let tour = request.body;
     let authorizationString = request.headers['authorization'];
@@ -35,7 +36,7 @@ router.put("/", async (request, response) => {
 });
 
 // get all tours
-router.get("/", async (request, response) => {
+router.get("/", routeGuard, async (request, response) => {
 
     let authorizationString = request.headers["authorization"];
 
@@ -51,7 +52,7 @@ router.get("/", async (request, response) => {
 });
 
 // remove vacation
-router.delete("/:tourId", async (request, response) => {
+router.delete("/:tourId", routeGuard, async (request, response) => {
 
     let tourId = request.params.tourId;
     let authorizationString = request.headers['authorization'];

@@ -1,6 +1,8 @@
 let followersLogic = require("../logic/followers-logic");
 const express = require("express");
 const router = express.Router();
+const routeGuard = require('../middleware/route-guard');
+
 
 // add follower
 router.post("/addFollower", async (request, response) => {
@@ -37,7 +39,7 @@ router.delete("/:tourId", async (request, response) => {
 });
 
 // get number of followers for each tour - data for charts
-router.get("/", async (request, response) => {
+router.get("/", routeGuard, async (request, response) => {
 
     try {
         let usersToursFollowing = await followersLogic.getNumberOfFollowersForAllTours();

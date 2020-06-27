@@ -91,6 +91,10 @@ async function deleteTour(tourId, authorizationString) {
 
     let userCacheData = await usersLogic.getMe(authorizationString);
 
+    if(!(userCacheData.userType === 'ADMIN')) {
+        throw new Error("Invalid user type - not ADMIN, userId is: " + userCacheData.userId);
+    }
+
     let deleteTourObj = {
         tourId: tourId,
         userType: userCacheData.userType
@@ -111,10 +115,6 @@ async function deleteTour(tourId, authorizationString) {
     }
 
 }
-
-
-
-
 
 module.exports = {
     addTour,
