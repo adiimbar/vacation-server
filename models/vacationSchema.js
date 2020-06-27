@@ -11,10 +11,49 @@ const vacationSchema = {
     tourId: Joi.number()
         .required()
   },
-  userIdCheck: {
-    userId: Joi.number()
-        .required()
+  addTour: {
+    destination: Joi.string()
+      .required(),
+
+    description: Joi.string()
+      .required(),
+
+    image_path: Joi.string()
+      .required(),
+
+    start_date: Joi.string()
+      .required(),
+
+    end_date: Joi.string()
+      .required(),
+
+    price: Joi.number()
+      .required()
+  },
+  updateTour: {
+    destination: Joi.string()
+      .required(),
+
+    description: Joi.string()
+      .required(),
+
+    image_path: Joi.string()
+      .required(),
+
+    start_date: Joi.string()
+      .required(),
+
+    end_date: Joi.string()
+      .required(),
+
+    price: Joi.number()
+      .required(),
+
+    id: Joi.number()
+      .required()
+
   }
+
 
 };
 

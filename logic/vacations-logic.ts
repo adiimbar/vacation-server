@@ -18,10 +18,9 @@ async function addTour(tour, authorizationString) {
         throw new Error("Invalid user type - not ADMIN, userId is: " + userCacheData.userId);
     }
 
-    // await validation.addTourValidation(tour);
+    await validation.addTourValidation(tour);
 
     let newTourId = await vacationsDao.addTour(tour);
-    
     let newTour = await vacationsDao.getTourById(newTourId);
 
     exportSocketGateway.publishNewTourToUsers(newTour[0]);
@@ -52,12 +51,12 @@ async function updateTour(tour, authorizationString) {
         tour.image_path = oldTourDetails[0].image_path;
     }
 
-    // await validation.updateTourValidation(tour);
+    
+    await validation.updateTourValidation(tour);
 
     let updatedTourId = await vacationsDao.updateTour(tour);
-
-    // get's the updated tour and send it to connected users via socket
     let updatedTour = await vacationsDao.getTourById(updatedTourId);
+
     exportSocketGateway.publishUpdatedTourToUsers(updatedTour[0]);
 }
 
