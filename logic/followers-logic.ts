@@ -27,12 +27,10 @@ async function addFollower(requestObj, authorizationString) {
     } else {
 
          // learned a new trick
-         await Promise.all([
+        await Promise.all([
             followersDao.addFollower(followObj),
             vacationsLogic.incrementFollowersByOne(followObj)
         ])
-
-        // exportSocketGateway.logger();
 
         return followObj
        

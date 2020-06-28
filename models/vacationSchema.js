@@ -5,7 +5,6 @@ const vacationSchema = {
 
   delete: {
     userType: Joi.string()
-        // .validate({ userType: 'ADMIN' })
         .required(),
 
     tourId: Joi.number()

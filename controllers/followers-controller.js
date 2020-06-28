@@ -29,8 +29,6 @@ router.delete("/:tourId", async (request, response) => {
     try {
         let successfullyRemovedFollower = await followersLogic.deleteSpecificTourFollow(tourId, authorizationString);
         response.json(successfullyRemovedFollower);
-        // await followersLogic.deleteSpecificTourFollow(tourId, authorizationString);
-        // response.status(200).json({data: 'follow removed'});
 
     } catch (error) {
         console.log(error);

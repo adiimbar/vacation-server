@@ -60,8 +60,6 @@ router.delete("/:tourId", routeGuard, async (request, response) => {
     try {
         let successfullyRemovedVacation = await vacationsLogic.deleteTour(tourId, authorizationString);
         response.json(successfullyRemovedVacation);
-        // await followersLogic.deleteSpecificTourFollow(tourId, authorizationString);
-        // response.status(200).json({data: 'follow removed'});
 
     } catch (error) {
         console.log(error);

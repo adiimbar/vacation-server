@@ -13,10 +13,6 @@ function authenticateJwtRequestToken() {
             '/users/login',
             '/users/register',
             '/uploads'
-            // '/users/forgotPassword',
-            // '/orders/amountOfOrders',
-            // '/products/amountOfProducts'
-
         ]
     });
 }
