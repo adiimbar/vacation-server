@@ -2,25 +2,17 @@ const usersLogic = require("../logic/users-logic");
 const authLogic = require("../logic/auth-logic");
 const express = require("express");
 const router = express.Router();
-// const jwt = require('jsonwebtoken');
-// const config = require('../config.json');
+
+// const errorHandler = require('../errors/error-handler');
 
 // login
 router.post("/login", async (request, response) => {
 
     let user = request.body;
-    // console.log('user log in controller value:');
-    // console.log(user);
 
     try {
         let successfullLoginData = await authLogic.login(user);
         response.json(successfullLoginData);
-
-        // let email = successfullLoginData[0].email;
-        // let userType = successfullLoginData[0].type;
-
-        // const token = jwt.sign({ sub: email }, config.secret);
-        // response.send({token:token, userType:userType});
 
     } catch (error) {
         console.log(error);

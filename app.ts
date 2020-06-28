@@ -9,12 +9,14 @@ const socketGateway = new SocketGateway();
 const fs = require("fs");
 const cors = require("cors");
 
-const userIdToSocketsMap = new Map();
+// const userIdToSocketsMap = new Map();
 
 const port = process.env.PORT || 3001;
 
-const uuid = require("uuid");
+// const uuid = require("uuid");
 const fileUpload = require("express-fileupload");
+const bodyParser = require('body-parser');
+
 
 
 const errorHandler = require('./middleware/error-handler');
@@ -32,8 +34,8 @@ if (!fs.existsSync("./uploads")) { // create "/uploads" folder if not exist.
 
 
 server.use(express.json());
-// server.use(bodyParser.urlencoded({ extended: false }));
-// server.use(bodyParser.json());
+server.use(bodyParser.urlencoded({ extended: false }));
+server.use(bodyParser.json());
 server.use(cors());
 server.use(fileUpload());
 server.use(express.json());

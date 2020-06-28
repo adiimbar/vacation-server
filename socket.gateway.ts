@@ -8,7 +8,7 @@ export class SocketGateway {
     connectedUsers = {};
 
     async initGateway(server) {
-        console.log('initGateway');
+        // console.log('initGateway');
         this.socketServer = socketIO.listen(server, { transport : ['websocket'] }); // Need the http
         this.socketServer.set('origins', '*:*')
         await this.handleConnection();
@@ -20,7 +20,7 @@ export class SocketGateway {
     async handleConnection() {
         this.socketServer.on('connection', (socket) => {
             const handshake = socket.request;
-            console.log('handshake._query', handshake._query);
+            // console.log('handshake._query', handshake._query);
             const id = handshake._query.userId;
             if (id) this.connectedUsers[id] = socket;
 
@@ -32,7 +32,7 @@ export class SocketGateway {
 
     async publishUsersTours(userIds: string[]) {
         const sockets = Object.keys(this.connectedUsers).filter((key) => {
-            console.log(key);
+            // console.log(key);
             return userIds.map((u) => String(u)).includes(key);
         }).map((key) => {
             // console.log('this.connectedUsers[key]:', this.connectedUsers[key])
@@ -57,7 +57,7 @@ export class SocketGateway {
 
     publishUpdatedTourToUsers(updatedTour: Object) {
 
-        console.log('in publishUpdatedTourToUsers')
+        // console.log('in publishUpdatedTourToUsers')
 
         const sockets: any = Object.values(this.connectedUsers);
 
